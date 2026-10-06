@@ -1,0 +1,43 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        sortedNums = sorted(nums)
+        solutions = set()
+        p1 = 0
+        p2 = 1
+        p3 = len(sortedNums) - 1
+        print(sortedNums)
+
+        while p1 < len(sortedNums):
+            if (sortedNums[p1] + sortedNums[p2] + sortedNums[p3]) == 0 and (
+                p1 != p2 and p2 != p3 and p3 != p1
+            ):
+                sortedSolution = tuple(sorted([sortedNums[p1], sortedNums[p2], sortedNums[p3]]))
+                if sortedSolution not in solutions:
+                    solutions.add(sortedSolution)
+                p2 += 1
+                p3 -= 1
+            elif (sortedNums[p1] + sortedNums[p2] + sortedNums[p3]) < 0:
+                p2 += 1
+            else:
+                p3 -= 1
+
+            if p2 > p3:
+                p1 += 1
+                p2 = 1
+                p3 = len(sortedNums) - 1
+        return list(solutions)
+
+    def binaryFindKey(self, arr: List[int], p1: int, p2: int, targetVal: int):
+        left = 0
+        right = len(arr) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if arr[mid] == targetVal and mid != p2 and mid != p1:
+                return mid
+
+            if arr[mid] < targetVal:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return -1
