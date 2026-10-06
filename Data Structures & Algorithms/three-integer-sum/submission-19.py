@@ -1,0 +1,30 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        sortedNums = sorted(nums)
+        solutions = []
+        p1 = 0
+        p2 = 1
+        p3 = len(sortedNums) - 1
+        print(sortedNums)
+
+        while p1 < len(sortedNums) and p2 < p3:
+            valSum = sortedNums[p1] + sortedNums[p2] + sortedNums[p3]
+            if valSum == 0 and (p1 != p2 and p2 != p3 and p3 != p1):
+                sortedSolution = [sortedNums[p1], sortedNums[p2], sortedNums[p3]]
+                if sortedSolution not in solutions:
+                    solutions.append(sortedSolution)
+                sumPs = p3 + p2
+                if (p3 + p2) > 0:
+                    p3 -= 1
+                else:
+                    p2 += 1
+            elif valSum < 0:
+                p2 += 1
+            else:
+                p3 -= 1
+
+            if p2 >= p3:
+                p1 += 1
+                p2 = p1 + 1
+                p3 = len(sortedNums) - 1
+        return list(solutions)
